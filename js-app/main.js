@@ -1,26 +1,25 @@
 const url = "https://localhost:5001/api/beanvariety/";
 const getAllCoffeesURL = "https://localhost:5001/api/coffee/";
 
-// const contentTarget = document.querySelector("#displayAllBeanVarieties");
+allCoffeesContainer = document.querySelector("#showCoffees")
 
+// -----------------------------------------------------------------------------------
+
+
+function getAllBeanVarieties() {
+    return fetch(url).then(resp => resp.json());
+}
 
 const button = document.querySelector("#run-button");
 button.addEventListener("click", () => {
     getAllBeanVarieties()
         .then(beanVarieties => {
             console.log(beanVarieties);
-
-            // contentTarget.innerHTML += `
-            // <h3> Here is a list of coffee bean varieties </h3>
-            // <div>${beanVarieties.name}</div>
-            // `
         })
 });
 
-function getAllBeanVarieties() {
-    return fetch(url).then(resp => resp.json());
-}
 
+// -----------------------------------------------------------------------------------
 
 
 function getAllCoffees() {
@@ -30,7 +29,14 @@ function getAllCoffees() {
 const AllCoffeesButton = document.querySelector("#show-coffees-button");
 AllCoffeesButton.addEventListener("click", () => {
     getAllCoffees()
-        .then(coffees => {
-            console.log(coffees);
+        .then(fetchedCoffees => {
+            fetchedCoffees.map(coffee =>
+                allCoffeesContainer.innerHTML += `
+                <ul>
+                <li>${coffee.title}</li>
+                <ul> `)
         })
 });
+
+
+// -----------------------------------------------------------------------------------
