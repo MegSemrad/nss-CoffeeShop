@@ -14,12 +14,22 @@ namespace CoffeeShop.Controllers
             _beanVarietyRepository = beanVarietyRepository;
         }
 
+
+
+
+
         // https://localhost:5001/api/beanvariety/
         [HttpGet]
         public IActionResult Get()
         {
+            //"Ok()" is used when want to return data
+            // Likewise, "NoContent()" is used to indicate the action was successful, but there is not data to return
             return Ok(_beanVarietyRepository.GetAll());
         }
+
+
+
+
 
         // https://localhost:5001/api/beanvariety/5
         [HttpGet("{id}")]
@@ -33,6 +43,10 @@ namespace CoffeeShop.Controllers
             return Ok(variety);
         }
 
+
+
+
+
         // https://localhost:5001/api/beanvariety/
         [HttpPost]
         public IActionResult Post(BeanVariety beanVariety)
@@ -40,6 +54,10 @@ namespace CoffeeShop.Controllers
             _beanVarietyRepository.Add(beanVariety);
             return CreatedAtAction("Get", new { id = beanVariety.Id }, beanVariety);
         }
+
+
+
+
 
         // https://localhost:5001/api/beanvariety/5
         [HttpPut("{id}")]
@@ -53,6 +71,10 @@ namespace CoffeeShop.Controllers
             _beanVarietyRepository.Update(beanVariety);
             return NoContent();
         }
+
+
+
+
 
         // https://localhost:5001/api/beanvariety/5
         [HttpDelete("{id}")]

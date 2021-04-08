@@ -23,6 +23,7 @@ namespace CoffeeShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IBeanVarietyRepository, BeanVarietyRepository>();
+            services.AddTransient<ICoffeeRepository, CoffeeRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -39,6 +40,14 @@ namespace CoffeeShop
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoffeeShop v1"));
+
+                // Do not block requests while in development
+                app.UseCors(options =>
+                {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });
             }
 
             app.UseHttpsRedirection();
