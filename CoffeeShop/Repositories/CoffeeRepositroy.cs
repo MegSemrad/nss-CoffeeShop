@@ -103,12 +103,12 @@ namespace CoffeeShop.Repositories
                         OUTPUT INSERTED.ID
                         VALUES (@title, @beanVarietyId)";
 
-    cmd.Parameters.AddWithValue("@title", coffee.Title);
-        cmd.Parameters.AddWithValue("@beanVarietyId", coffee.BeanVarietyId);
+                    cmd.Parameters.AddWithValue("@title", coffee.Title);
+                    cmd.Parameters.AddWithValue("@beanVarietyId", coffee.BeanVarietyId);
 
                     coffee.Id = (int) cmd.ExecuteScalar();
-    }
-}
+                }
+            }
         }
 
 
@@ -116,24 +116,24 @@ namespace CoffeeShop.Repositories
 
 
         public void Update(Coffee coffee)
-{
-    using (var conn = Connection)
-    {
-        conn.Open();
-        using (var cmd = conn.CreateCommand())
         {
-            cmd.CommandText = @"
-                        UPDATE Coffee 
-                        SET Title = @name,
-                        BeanVarietyId = @beanVarietyId
-                         WHERE Id = @id";
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE Coffee 
+                                SET Title = @name,
+                                BeanVarietyId = @beanVarietyId
+                                 WHERE Id = @id";
                     cmd.Parameters.AddWithValue("@id", coffee.Id);
                     cmd.Parameters.AddWithValue("@name", coffee.Title);
                     cmd.Parameters.AddWithValue("@region", coffee.BeanVarietyId);
 
                     cmd.ExecuteNonQuery();
                 }
-}
+            }
         }
 
 
@@ -141,18 +141,18 @@ namespace CoffeeShop.Repositories
 
 
         public void Delete(int id)
-{
-        using (var conn = Connection)
         {
-            conn.Open();
-            using (var cmd = conn.CreateCommand())
+            using (var conn = Connection)
             {
-                cmd.CommandText = "DELETE FROM Coffee WHERE Id = @id";
-                cmd.Parameters.AddWithValue("@id", id);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Coffee WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
-}
     }
 }

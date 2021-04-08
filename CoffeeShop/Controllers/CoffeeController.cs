@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CoffeeShop.Repositories;
-
+using CoffeeShop.Models;
 
 namespace CoffeeShop.Controllers
 {
@@ -42,8 +42,10 @@ namespace CoffeeShop.Controllers
 
         // POST api/<CoffeeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Coffee coffee)
         {
+            _coffeeRepository.Add(coffee);
+            return CreatedAtAction("Get", new { id = coffee.Id }, coffee);
         }
 
 
@@ -52,8 +54,15 @@ namespace CoffeeShop.Controllers
 
         // PUT api/<CoffeeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Coffee coffee)
         {
+            if (id != coffee.Id)
+            {
+                return BadRequest();
+            }
+
+            _coffeeRepository.Update(coffee);
+            return NoContent();
         }
 
 
