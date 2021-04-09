@@ -29,7 +29,11 @@ namespace CoffeeShop.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Title, BeanVarietyId FROM Coffee;";
+                    cmd.CommandText = @"
+                            SELECT Id, 
+                            Title, 
+                            BeanVarietyId 
+                            FROM Coffee;";
                     var reader = cmd.ExecuteReader();
                     var coffees = new List<Coffee>();
                     while (reader.Read())
@@ -126,7 +130,7 @@ namespace CoffeeShop.Repositories
                                 UPDATE Coffee 
                                 SET Title = @name,
                                 BeanVarietyId = @beanVarietyId
-                                 WHERE Id = @id";
+                                WHERE Id = @id";
                     cmd.Parameters.AddWithValue("@id", coffee.Id);
                     cmd.Parameters.AddWithValue("@name", coffee.Title);
                     cmd.Parameters.AddWithValue("@region", coffee.BeanVarietyId);

@@ -17,7 +17,7 @@ namespace CoffeeShop.Controllers
 
 
 
-
+        // https://localhost:5001/api/coffee/
         // GET: api/<CoffeeController>
         [HttpGet]
         public IActionResult Get()
@@ -28,18 +28,23 @@ namespace CoffeeShop.Controllers
 
 
 
-
+        // https://localhost:5001/api/coffee/5
         // GET api/<CoffeeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var coffeeObj = _coffeeRepository.Get(id);
+            if (coffeeObj == null)
+            {
+                return NotFound();
+            }
+            return Ok(coffeeObj);
         }
 
 
 
 
-
+        // https://localhost:5001/api/coffee/
         // POST api/<CoffeeController>
         [HttpPost]
         public IActionResult Post(Coffee coffee)
@@ -51,7 +56,7 @@ namespace CoffeeShop.Controllers
 
 
 
-
+        // https://localhost:5001/api/coffee/5
         // PUT api/<CoffeeController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, Coffee coffee)
@@ -68,11 +73,13 @@ namespace CoffeeShop.Controllers
 
 
 
-
+        // https://localhost:5001/api/coffee/5
         // DELETE api/<CoffeeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _coffeeRepository.Delete(id);
+            return NoContent();
         }
     }
 }
