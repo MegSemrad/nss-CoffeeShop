@@ -1,19 +1,18 @@
-const url = "https://localhost:5001/api/beanvariety/";
-const getAllCoffeesURL = "https://localhost:5001/api/coffee/";
-
-
-// -----------------------------------------------------------------------------------
-
-
 function getAllBeanVarieties() {
-    return fetch(url).then(resp => resp.json());
+    return fetch("https://localhost:5001/api/beanvariety/")
+        .then(resp => resp.json());
 }
 
+const allBeanVarietiesContainer = document.querySelector("#displayAllBeanVarietiesContainer");
 const button = document.querySelector("#run-button");
 button.addEventListener("click", () => {
     getAllBeanVarieties()
         .then(beanVarieties => {
-            console.log(beanVarieties);
+            beanVarieties.map(bv =>
+                allBeanVarietiesContainer.innerHTML += `
+                    <ul>
+                        <li>${bv.name}</li>
+                    <ul>`)
         })
 });
 
@@ -23,7 +22,6 @@ button.addEventListener("click", () => {
 
 const AddBeanVarietyButton = document.querySelector("#addBeanVarietyButton");
 AddBeanVarietyButton.addEventListener("click", () => {
-
     const name = document.querySelector(".beanVarietyNameInput").value
     const region = document.querySelector(".beanVarietyRegionInput").value
     const notes = document.querySelector(".beanVarietyNotesInput").value
@@ -38,7 +36,7 @@ AddBeanVarietyButton.addEventListener("click", () => {
 
 
 function addBeanVariety(newBeanObject) {
-    return fetch(url, {
+    return fetch("https://localhost:5001/api/beanvariety/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -54,19 +52,21 @@ function addBeanVariety(newBeanObject) {
 
 
 function getAllCoffees() {
-    return fetch(getAllCoffeesURL).then(resp => resp.json());
+    return fetch("https://localhost:5001/api/coffee/").then(resp => resp.json());
 }
 
 const allCoffeesContainer = document.querySelector("#showCoffees");
 const AllCoffeesButton = document.querySelector("#showCoffeesButton");
+
 AllCoffeesButton.addEventListener("click", () => {
     getAllCoffees()
         .then(fetchedCoffees => {
             fetchedCoffees.map(coffee =>
                 allCoffeesContainer.innerHTML += `
-                <ul>
-                <li>${coffee.title}</li>
-                <ul> `)
+                    <ul>
+                        <li>${coffee.title}</li>
+                    <ul> `
+            )
         })
 });
 
